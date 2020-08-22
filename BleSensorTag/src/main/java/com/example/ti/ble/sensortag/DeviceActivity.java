@@ -474,7 +474,9 @@ import com.example.ti.util.PreferenceWR;
 
                                 }
                             });
+
                             if (Build.VERSION.SDK_INT > 18) maxNotifications = 7;
+
                             else {
                                 maxNotifications = 4;
                                 runOnUiThread(new Runnable() {
@@ -627,9 +629,13 @@ import com.example.ti.util.PreferenceWR;
                                 if (SensorTagTestProfile.isCorrectService(s)) {
                                     mTestService = s;
                                 }
-                                if ((s.getUuid().toString().compareTo("f000ccc0-0451-4000-b000-000000000000")) == 0) {
+//                                if ((s.getUuid().toString().compareTo("f000ccc0-0451-4000-b000-000000000000")) == 0) {
+//                                    mConnControlService = s;
+//                                }
+                                if ((s.getUuid().toString().compareTo("f000ffc0-0451-4000-b000-000000000000")) == 0) {
                                     mConnControlService = s;
                                 }
+
                             }
                             runOnUiThread(new Runnable() {
                                 @Override
