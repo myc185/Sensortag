@@ -163,7 +163,6 @@ import com.example.ti.util.PreferenceWR;
 		if ((deviceName.equals("SensorTag2")) ||(deviceName.equals("CC2650 SensorTag"))) {
 			mIsSensorTag2 = true;
 		}
-		else mIsSensorTag2 = false;
 
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		// Log.i(TAG, "Preferences for: " + deviceName);
@@ -259,8 +258,8 @@ import com.example.ti.util.PreferenceWR;
 			mIsReceiving = true;
 		}
 		for (GenericBluetoothProfile p : mProfiles) {
-            if (p.isConfigured != true) p.configureService();
-            if (p.isEnabled != true) p.enableService();
+            if (!p.isConfigured) p.configureService();
+            if (!p.isEnabled) p.enableService();
 			p.onResume();
 		}
 		this.mBtLeService.abortTimedDisconnect();
@@ -328,6 +327,7 @@ import com.example.ti.util.PreferenceWR;
 	String firmwareRevision() {
 		return mFwRev;
 	}
+
 	BluetoothGattService getOadService() {
 		return mOadService;
 	}
@@ -335,6 +335,7 @@ import com.example.ti.util.PreferenceWR;
 	BluetoothGattService getConnControlService() {
 		return mConnControlService;
 	}
+
     BluetoothGattService getTestService() {
         return mTestService;
     }

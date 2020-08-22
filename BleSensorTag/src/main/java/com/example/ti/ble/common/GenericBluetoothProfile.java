@@ -94,13 +94,13 @@ public class GenericBluetoothProfile {
 		this.isRegistered = false;
 	}
 	public void onResume() {
-		if (this.isRegistered == false) {
+		if (!this.isRegistered) {
 			this.context.registerReceiver(guiReceiver, GenericBluetoothProfile.makeFilter());
 			this.isRegistered = true;
 		}
 	}
 	public void onPause() {
-		if (this.isRegistered == true) {
+		if (this.isRegistered) {
 			this.context.unregisterReceiver(guiReceiver);
 			this.isRegistered = false;
 		}

@@ -268,7 +268,11 @@ public class FwUpdateActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(mGattUpdateReceiver);
+        try{
+            unregisterReceiver(mGattUpdateReceiver);
+        } catch (Exception ex) {
+        }
+
     }
 
     private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
