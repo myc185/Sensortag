@@ -210,6 +210,7 @@ public class FwUpdateActivity extends Activity {
         mBtnLoadB.setEnabled(mServiceOk);
         mBtnLoadC.setEnabled(mServiceOk);
         initIntentFilter();
+        registerReceiver(mGattUpdateReceiver, mIntentFilter);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
@@ -220,6 +221,10 @@ public class FwUpdateActivity extends Activity {
         if (mTimerTask != null)
             mTimerTask.cancel();
         mTimer = null;
+        try {
+            unregisterReceiver(mGattUpdateReceiver);
+        } catch (Exception ex) {
+        }
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
@@ -249,7 +254,7 @@ public class FwUpdateActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(mGattUpdateReceiver, mIntentFilter);
+
         initBle();
         if (mServiceOk) {
 
@@ -268,10 +273,7 @@ public class FwUpdateActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        try {
-            unregisterReceiver(mGattUpdateReceiver);
-        } catch (Exception ex) {
-        }
+
 
     }
 
