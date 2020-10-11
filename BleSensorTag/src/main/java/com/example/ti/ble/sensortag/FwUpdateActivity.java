@@ -249,10 +249,10 @@ public class FwUpdateActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        registerReceiver(mGattUpdateReceiver, mIntentFilter);
         initBle();
         if (mServiceOk) {
-            registerReceiver(mGattUpdateReceiver, mIntentFilter);
+
 
             // Read target image info
             getTargetImageInfo();
@@ -268,7 +268,7 @@ public class FwUpdateActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        try{
+        try {
             unregisterReceiver(mGattUpdateReceiver);
         } catch (Exception ex) {
         }
@@ -278,6 +278,8 @@ public class FwUpdateActivity extends Activity {
     private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+
+            Log.e("FwUpdateActivity", "onReceive");
 
             final String action = intent.getAction();
 
@@ -291,6 +293,7 @@ public class FwUpdateActivity extends Activity {
                     mTargImgHdr.imgType = ((mTargImgHdr.ver & 1) == 1) ? 'B' : 'A';
                     mTargImgHdr.len = Conversion.buildUint16(value[3], value[2]);
                     displayImageInfo(mTargImage, mTargImgHdr);
+                    updateGui();
                 }
                 if (uuidStr.equals(mCharBlock.getUuid().toString())) {
                     if (mProgramming == true) programBlock(((value[1] << 8) & 0xff00) + (value[0] & 0x00ff));
